@@ -14,4 +14,4 @@ dotenv.config();
 
 app.use('/api',createEventRoute)
 
-export default app
+export default app 

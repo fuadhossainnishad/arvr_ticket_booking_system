@@ -37,7 +37,7 @@ const CreateEvent: React.FC = () => {
       const response = await client.post("/api/events", formDataToSend, {
         headers: { "Content-Type": "multipart/form-data" },
       });
-      if(response.data.status === 200){
+      if(response.status === 200){
         alert("Event created successfully!");
       }
     } catch (error) {
