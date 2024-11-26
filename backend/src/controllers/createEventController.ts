@@ -1,5 +1,5 @@
 import { Request, Response } from "express";
-import db from "../dbconfig";
+import db from "../config/dbconfig";
 import { ResultSetHeader } from "mysql2";
 
 const createEventController= async(req:Request,res:Response)=>{

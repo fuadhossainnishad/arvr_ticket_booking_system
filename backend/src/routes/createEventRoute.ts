@@ -1,6 +1,6 @@
 import express from 'express';
 import upload from '../filehandle/createEvent';
-import createEventController from '../config/controllers/createEventController';
+import createEventController from '../controllers/createEventController';
 
 export  const createEventRoute=express.Router()
 

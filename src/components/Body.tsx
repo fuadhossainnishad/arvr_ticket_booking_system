@@ -1,5 +1,5 @@
 import React from 'react'
-import BookingTable from './components/BookingTable';
+import BookingTable from './BookingTable';
 
 export default function Body() {
   return (

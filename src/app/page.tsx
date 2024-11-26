@@ -3,7 +3,7 @@ import CreateEvent from '../components/CreateEvent';
 import EditEvent from '../components/EditEvent';
 import DeleteEvent from '../components/DeleteEvent';
 import BookingComponent from '../components/BookingComponent';
-import Body from '../Body';
+import Body from '../components/Body';
 export default function Home() {
   return (
     <main className="">
