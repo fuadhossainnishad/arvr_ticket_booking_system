@@ -1,9 +1,11 @@
-'use client'
+"use client";
 import React, { useState, useEffect } from "react";
-import axios from "axios";
+import { client } from "@/lib/client";
+import Image from "next/image";
+import { formateDate } from "@/lib/formateDate";
 
 interface EditEventProps {
-  eventId: number; // Pass the event ID as a prop
+  eventId: number;
 }
 
 const EditEvent: React.FC<EditEventProps> = ({ eventId }) => {
@@ -15,21 +17,25 @@ const EditEvent: React.FC<EditEventProps> = ({ eventId }) => {
     eventDate: "",
     coverPhoto: null as File | null,
   });
+  const [previewPhoto, setPreviewPhoto] = useState<string | null>(null);
 
   useEffect(() => {
-    // Fetch event data
     const fetchEvent = async () => {
       try {
-        const response = await axios.get(`/api/events/${eventId}`);
+        const response = await client.get(`/api/events/${eventId}`);
         const event = response.data;
+        console.log(event);
+
         setFormData({
           title: event.title,
           description: event.description,
           totalSeats: event.totalSeats,
           ticketPrice: event.ticketPrice,
-          eventDate: event.eventDate,
+          eventDate: formateDate(event.eventDate),
           coverPhoto: null,
         });
+        console.log(event.eventDate)
+        setPreviewPhoto(event.coverPhoto);
       } catch (error) {
         console.log("Error fetching event:", error);
         alert("Failed to load event data.");
@@ -39,14 +45,18 @@ const EditEvent: React.FC<EditEventProps> = ({ eventId }) => {
     fetchEvent();
   }, [eventId]);
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+  const handleChange = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+  ) => {
     const { name, value } = e.target;
     setFormData({ ...formData, [name]: value });
   };
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files) {
-      setFormData({ ...formData, coverPhoto: e.target.files[0] });
+      const file = e.target.files[0];
+      setFormData({ ...formData, coverPhoto: file });
+      setPreviewPhoto(URL.createObjectURL(file));
     }
   };
 
@@ -58,10 +68,11 @@ const EditEvent: React.FC<EditEventProps> = ({ eventId }) => {
     formDataToSend.append("totalSeats", String(formData.totalSeats));
     formDataToSend.append("ticketPrice", String(formData.ticketPrice));
     formDataToSend.append("eventDate", formData.eventDate);
-    if (formData.coverPhoto) formDataToSend.append("coverPhoto", formData.coverPhoto);
+    if (formData.coverPhoto)
+      formDataToSend.append("coverPhoto", formData.coverPhoto);
 
     try {
-      await axios.put(`/api/events/${eventId}`, formDataToSend, {
+      await client.put(`/api/events/${eventId}`, formDataToSend, {
         headers: { "Content-Type": "multipart/form-data" },
       });
       alert("Event updated successfully!");
@@ -72,7 +83,10 @@ const EditEvent: React.FC<EditEventProps> = ({ eventId }) => {
   };
 
   return (
-    <form onSubmit={handleSubmit} className="max-w-md mx-auto p-4 border rounded">
+    <form
+      onSubmit={handleSubmit}
+      className="max-w-md mx-auto p-4 border rounded"
+    >
       <h2 className="text-xl font-bold mb-4">Edit Event</h2>
       <div className="mb-4">
         <label className="block text-sm font-medium mb-2">Title</label>
@@ -81,8 +95,8 @@ const EditEvent: React.FC<EditEventProps> = ({ eventId }) => {
           name="title"
           value={formData.title}
           onChange={handleChange}
-          className="w-full border p-2 rounded"
           placeholder={formData.title}
+          className="w-full border p-2 rounded"
           required
         />
       </div>
@@ -92,8 +106,8 @@ const EditEvent: React.FC<EditEventProps> = ({ eventId }) => {
           name="description"
           value={formData.description}
           onChange={handleChange}
-          className="w-full border p-2 rounded"
           placeholder={formData.description}
+          className="w-full border p-2 rounded"
           rows={4}
           required
         ></textarea>
@@ -103,10 +117,10 @@ const EditEvent: React.FC<EditEventProps> = ({ eventId }) => {
         <input
           type="number"
           name="totalSeats"
-          value={formData.totalSeats}
+          value={formData.totalSeats || undefined}
           onChange={handleChange}
+          placeholder={`${formData.totalSeats || undefined}`}
           className="w-full border p-2 rounded"
-          placeholder={String(formData.totalSeats) } 
           required
         />
       </div>
@@ -115,10 +129,10 @@ const EditEvent: React.FC<EditEventProps> = ({ eventId }) => {
         <input
           type="number"
           name="ticketPrice"
-          value={formData.ticketPrice}
+          value={formData.ticketPrice || undefined}
           onChange={handleChange}
+          placeholder={`${formData.ticketPrice || undefined}`}
           className="w-full border p-2 rounded"
-          placeholder={String(formData.ticketPrice)}
           required
         />
       </div>
@@ -129,8 +143,8 @@ const EditEvent: React.FC<EditEventProps> = ({ eventId }) => {
           name="eventDate"
           value={formData.eventDate}
           onChange={handleChange}
-          className="w-full border p-2 rounded"
           placeholder={formData.eventDate}
+          className="w-full border p-2 rounded"
           required
         />
       </div>
@@ -140,12 +154,24 @@ const EditEvent: React.FC<EditEventProps> = ({ eventId }) => {
           type="file"
           name="coverPhoto"
           onChange={handleFileChange}
+          placeholder={`${formData.coverPhoto}`}
           className="w-full border p-2 rounded"
-          placeholder="Event Cover Photo"
           accept="image/*"
         />
+        {previewPhoto && (
+          <Image
+            src={previewPhoto}
+            alt={formData.title || "Event Cover Photo"}
+            width={500}
+            height={300}
+            className="mt-2"
+          />
+        )}
       </div>
-      <button type="submit" className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600">
+      <button
+        type="submit"
+        className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600"
+      >
         Update Event
       </button>
     </form>

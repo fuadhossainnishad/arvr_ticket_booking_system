@@ -1,7 +1,7 @@
-import Events from '@/components/Events'
+import CreateEvent from '@/components/CreateEvent'
 
 export default function page() {
   return (
-    <Events/>
+    <CreateEvent/>
   )
 }

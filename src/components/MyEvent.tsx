@@ -52,7 +52,7 @@ const MyEvent: React.FC = () => {
   if (!isAuthenticated) return null; // Prevent rendering before authentication check
 
   return (
-    <div className="container mx-auto p-6">
+    <div className="container mx-auto  ">
       <h1 className="text-3xl font-bold text-center mb-6">My Booked Events</h1>
 
       {loading ? (
