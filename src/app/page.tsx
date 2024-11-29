@@ -11,7 +11,7 @@ export default function Home() {
   return (
     <main suppressHydrationWarning className="">
       <Body />
-      <Events/>
+      <Events  />
       <AboutUs/>
       <Contact/>
       {/* <Signup />

@@ -16,7 +16,7 @@ const getEventController = async (req: Request, res: Response) => {
 
     const event: Event = rows[0] as Event;
     const fileBaseURL = `${req.protocol}://${req.get("host")}`; // Base URL for uploaded files
-    event.coverPhoto = event.coverPhoto ? `${fileBaseURL}/${event.coverPhoto}` : null;
+    event.coverPhoto = event.coverPhoto ? `${fileBaseURL}/${event.coverPhoto}`:"";
 
     res.json(event);
     console.log(event);

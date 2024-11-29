@@ -41,7 +41,7 @@ const CreateEvent: React.FC = () => {
         alert("Event created successfully!");
       }
     } catch (error) {
-      console.error(error);
+      console.log(error);
       alert("Error creating event");
     }
   };

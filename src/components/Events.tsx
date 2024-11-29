@@ -35,7 +35,10 @@ const Events: React.FC = () => {
   }, []);
 
   return (
-    <div className="container min-h-screen my-12 text-gray-800 mx-auto py-12 px-6 flex flex-col items-center ">
+    <div
+      suppressHydrationWarning
+      className="container min-h-screen my-12 text-gray-800 mx-auto py-12 px-6 flex flex-col items-center "
+    >
       <h1 className="text-3xl font-bold text-center mb-6">All Events</h1>
 
       {loading ? (
@@ -50,12 +53,14 @@ const Events: React.FC = () => {
               className="border rounded shadow hover:shadow-lg transition p-4"
             >
               <Image
-                src="/images/bgimage.jpg"
+                src={`http://localhost:5000${event.coverPhoto}`}
                 alt={event.title}
                 className="w-full h-48 rounded mb-4"
                 width={4}
                 height={4}
-    
+                quality={100}
+                unoptimized= {true}                
+                placeholder="empty"
               />
               <h2 className="text-xl font-bold mb-2">{event.title}</h2>
               <p className="text-sm mb-2 text-gray-600">
