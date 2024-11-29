@@ -1,7 +1,9 @@
-import MyEvent from '@/components/MyEvent'
+import MyEvent from "@/components/MyEvent";
 
 export default function page() {
   return (
-    <MyEvent/>
-  )
+    <main className="max-h-screen">
+      <MyEvent />
+    </main>
+  );
 }

@@ -1,6 +1,8 @@
-'use client'
+'use client';
+
 import React, { useState, useEffect } from "react";
 import axios from "axios";
+import { motion } from "motion/react";
 
 interface Event {
   id: number;
@@ -56,48 +58,65 @@ const BookingTable: React.FC = () => {
   };
 
   return (
-    <div className="max-w-lg mx-auto p-4 border rounded shadow">
-      <h2 className="text-center text-xl font-bold mb-4">Book Your Event</h2>
+    <motion.div
+      initial={{ opacity: 0, y: 50 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.8 }}
+      className="max-w-xl mx-auto mt-20 p-6 bg-white shadow-lg rounded-lg"
+    >
+      <h2 className="text-center text-2xl font-bold mb-6 text-blue-600">
+        Book Your Event
+      </h2>
 
-      <div className="mb-4">
-        <label className="block text-sm font-medium mb-2" htmlFor="event-select">Select Event</label>
+      <div className="mb-5">
+        <label
+          className="block text-sm font-semibold text-gray-700 mb-2"
+          htmlFor="event-select"
+        >
+          Select Event
+        </label>
         <select
-        id="event-select"
+          id="event-select"
           value={selectedEventId ?? ""}
           onChange={(e) => setSelectedEventId(Number(e.target.value))}
-          className="w-full border p-2 rounded"
+          className="w-full p-3 border rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500"
         >
           <option value="" disabled>
             Choose an event
           </option>
           {events.map((event) => (
             <option key={event.id} value={event.id}>
-              {event.title} - {event.availableSeats} seats left - ${event.ticketPrice} per ticket
+              {event.title} - {event.availableSeats} seats left - $
+              {event.ticketPrice} per ticket
             </option>
           ))}
         </select>
       </div>
 
-      <div className="mb-4">
-        <label className="block text-sm font-medium mb-2">Seats</label>
+      <div className="mb-5">
+        <label className="block text-sm font-semibold text-gray-700 mb-2">
+          Seats
+        </label>
         <input
           type="number"
           min={1}
           max={selectedEventId ? events.find((e) => e.id === selectedEventId)?.availableSeats : 1}
           value={seats}
           onChange={(e) => setSeats(Number(e.target.value))}
-          placeholder="Seats"
-          className="w-full border p-2 rounded"
+          placeholder="Number of Seats"
+          className="w-full p-3 border rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500"
         />
       </div>
 
-      <button
+      <motion.button
+        whileHover={{ scale: 1.05 }}
+        whileTap={{ scale: 0.95 }}
         onClick={handleBooking}
-        className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600"
+        className="w-full bg-blue-600 text-white py-3 rounded-lg font-semibold shadow-md hover:bg-blue-700 transition"
       >
         Book Event
-      </button>
-    </div>
+      </motion.button>
+    </motion.div>
   );
 };
 

@@ -11,7 +11,7 @@ import app from './app';
 // Test MySQL connection
 const testDatabaseConnection = async () => {
   try {
-    const [rows] = await db.query('SELECT * FROM student');
+    const [rows] = await db.query('SELECT * FROM events');
     console.log('Data from database:', rows);
   } catch (err) {
     console.error('Database connection failed:', err);
@@ -32,7 +32,7 @@ app.get('/students', async (req:Request, res:Response) => {
 
 // Start server and test database connection
 const port = 5000;
-app.listen(port, async () => {
+app.listen(port,async () => {
   console.log(`Server is listening on http://localhost:${port}`);
   await testDatabaseConnection(); 
 });
