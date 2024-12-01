@@ -1,6 +1,7 @@
 import { Request, Response } from "express";
 import db from "../config/dbconfig";
 import { ResultSetHeader } from "mysql2";
+import { fileName } from "../filehandle/fileName";
 
 const createEventController= async(req:Request,res:Response)=>{
     const { title, description, totalSeats, ticketPrice, eventDate } = req.body;
@@ -9,12 +10,12 @@ const createEventController= async(req:Request,res:Response)=>{
     return res.status(400).json({ error: "Cover photo is required" });
   }
 
-  const coverPhotoPath = req.file.path;
+  const coverPhoto =await  fileName(req)
 
   try {
     const [result] = await db.query<ResultSetHeader>(
       `INSERT INTO events (title, description, totalSeats, ticketPrice, eventDate, coverPhoto) VALUES (?, ?, ?, ?, ?, ?)`,
-      [title, description, totalSeats, ticketPrice, eventDate, coverPhotoPath]
+      [title, description, totalSeats, ticketPrice, eventDate, coverPhoto]
     );
     
 

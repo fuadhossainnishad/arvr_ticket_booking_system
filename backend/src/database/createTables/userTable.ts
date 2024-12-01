@@ -2,7 +2,7 @@ import { createTableLib } from "../../lib/createTableLib"
 
 const createUserTableQuery=`CREATE TABLE IF NOT EXISTS users (
   id INT AUTO_INCREMENT PRIMARY KEY,
-  fullname VARCHAR(255) NOT NULL,
+  fullName VARCHAR(255) NOT NULL,
   email VARCHAR(255) UNIQUE NOT NULL,
   mobileNumber VARCHAR(15),
   hashPassword VARCHAR(255) NOT NULL,

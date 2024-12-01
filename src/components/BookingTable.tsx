@@ -93,7 +93,7 @@ const BookingTable: React.FC = () => {
         </select>
       </div>
 
-      <div className="mb-5">
+      <div suppressHydrationWarning className="mb-5">
         <label className="block text-sm font-semibold text-gray-700 mb-2">
           Seats
         </label>

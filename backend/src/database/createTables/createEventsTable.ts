@@ -6,7 +6,7 @@ export const createEventTableQuery = `CREATE TABLE events (
     ticketPrice DECIMAL(10, 2) NOT NULL,
     eventDate DATE NOT NULL,
     coverPhoto VARCHAR(255) NOT NULL,
-    createdAt DATETIME NOT NULL,
-    updatedAt DATETIME NOT NULL
+  created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+  updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 );
 `;

@@ -7,6 +7,6 @@ const getAdminRoute=express.Router()
 
 getAdminRoute.post('/signin/admin',validateRequest(UserValiation.userSignInValidationSchema),getAdminIdController)
 
-getAdminRoute.get('/admin/:{adminId}',getAdminInfoController)
+getAdminRoute.get('/admin/:adminId',getAdminInfoController)
 
 export default getAdminRoute;

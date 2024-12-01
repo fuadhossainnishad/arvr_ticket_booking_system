@@ -1,23 +1,17 @@
 import express from "express";
 import cors from "cors";
 import dotenv from "dotenv";
-import bodyParser from "body-parser";
+// import bodyParser from "body-parser";
 import path from "path";
-import fs from "fs";
 import { createEventRoute } from "./routes/createEventRoute";
 import getEventRoute from "./routes/getEventRoute";
 import getAllEventRoute from "./routes/getAllEventRoute";
 import getUserRoute from "./routes/userRoute";
 import getAdminRoute from "./routes/adminRoute";
+import { uploadsDir } from "./filehandle/uploadsDir";
 
 // Load environment variables
 dotenv.config();
-
-// Ensure uploads directory exists
-const uploadsDir = path.join(__dirname, "../uploads");
-if (!fs.existsSync(uploadsDir)) {
-  fs.mkdirSync(uploadsDir, { recursive: true });
-}
 
 // Initialize Express app
 const app = express();
@@ -26,7 +20,7 @@ const app = express();
 app.use(cors());
 app.use(express.json()); // Use built-in Express middleware
 app.use(express.urlencoded({ extended: true }));
-app.use("/uploads", express.static(path.join(__dirname, "../uploads")));
+app.use("/uploads", express.static(uploadsDir));
 
 // Routes
 app.use("/api/", getAllEventRoute);
