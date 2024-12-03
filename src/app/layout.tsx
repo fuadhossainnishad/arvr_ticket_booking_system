@@ -2,6 +2,8 @@ import type { Metadata } from "next";
 // import localFont from "next/font/local";
 import "./globals.css";
 
+import StoreProvider from "@/store/storeProvider";
+
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 
@@ -17,11 +19,10 @@ import Footer from "@/components/Footer";
 // });
 // ${geistSans.variable} ${geistMono.variable}
 
-
 export const metadata: Metadata = {
-    title: "AR/VR Ticket Booking System",
-    description: "Book your AR/VR tickets seamlessly", 
-  };
+  title: "AR/VR Ticket Booking System",
+  description: "Book your AR/VR tickets seamlessly",
+};
 
 export default function RootLayout({
   children,
@@ -30,12 +31,12 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" suppressHydrationWarning>
-      <body suppressHydrationWarning
-        className={` antialiased text-black  `}
-      >
-        <Header/>
-        {children}
-        <Footer/>
+      <body suppressHydrationWarning className={` antialiased text-black  `}>
+        <StoreProvider>
+          <Header />
+          {children}
+          <Footer />
+        </StoreProvider>
       </body>
     </html>
   );

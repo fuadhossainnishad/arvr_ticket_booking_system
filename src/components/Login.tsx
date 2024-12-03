@@ -1,6 +1,8 @@
 "use client";
 import { auth } from "@/service/authService";
+import Link from "next/link";
 import { useState } from "react";
+
 
 const signinForm = {
   email: "",
@@ -28,7 +30,7 @@ export default function UserLogin() {
   };
 
   return (
-    <main className="flex flex-col items-center justify-center min-h-screen bg-gray-100">
+    <main suppressHydrationWarning className="flex flex-col items-center justify-center min-h-screen bg-gray-100">
       {/* Buttons to switch between user and admin login */}
       <div className="mb-6">
         <button
@@ -46,7 +48,7 @@ export default function UserLogin() {
       </div>
 
       {/* Login form */}
-      <form
+      <form suppressContentEditableWarning
         onSubmit={handleSignin}
         className="w-full max-w-lg p-8 bg-white rounded-lg shadow-lg"
       >
@@ -92,9 +94,9 @@ export default function UserLogin() {
         <div className="mt-4 text-center">
           <p className="text-sm text-gray-600">
             {isAdmin ? "Not an admin?" : "Don't have an account?"}{" "}
-            <a href="/signup" className="text-blue-500 hover:underline">
+            <Link href="/signup" className="text-blue-500 hover:underline">
               Sign Up
-            </a>
+            </Link>
           </p>
         </div>
       </form>

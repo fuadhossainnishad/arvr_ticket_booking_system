@@ -53,5 +53,6 @@ export const postSingleUserController = catchAsync(
       return res.status(404).json({ message: "User not signedUp" });
     }
     return res.status(200).json({ message: "User signedUp successfully" });
+    console.log(postUser)
   }
 );

@@ -29,7 +29,7 @@ export default function Signup() {
   };
 
   return (
-    <main className="flex items-center justify-center min-h-screen bg-gray-100 py-12 px-6 sm:px-12">
+    <main suppressHydrationWarning className="flex items-center justify-center min-h-screen bg-gray-100 py-12 px-6 sm:px-12">
       <div className="w-full max-w-md bg-white p-8 rounded-lg shadow-lg">
         <h2 className="text-3xl font-semibold text-center text-gray-700 mb-8">
           Create Your Account
@@ -101,7 +101,7 @@ export default function Signup() {
           </div>
 
           {/* Sign Up Button */}
-          <button
+          <button suppressHydrationWarning
             type="submit"
             className="w-full py-3 bg-blue-500 text-white font-semibold rounded-lg hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500"
           >
