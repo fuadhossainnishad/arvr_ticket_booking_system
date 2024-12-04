@@ -47,7 +47,7 @@ const CreateEvent: React.FC = () => {
   };
 
   return (
-    <form onSubmit={handleSubmit} className="max-w-md mx-auto p-4 border rounded"> 
+    <form suppressHydrationWarning onSubmit={handleSubmit} className="max-w-md mx-auto p-4 border rounded"> 
       <h2 className="text-xl font-bold mb-4">Create Event</h2>
       <div className="mb-4">
         <label className="block text-sm font-medium mb-2">Title</label>

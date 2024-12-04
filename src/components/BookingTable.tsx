@@ -59,23 +59,24 @@ const BookingTable: React.FC = () => {
 
   return (
     <motion.div
+    suppressHydrationWarning
       initial={{ opacity: 0, y: 50 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.8 }}
       className="max-w-xl mx-auto mt-20 p-6 bg-white shadow-lg rounded-lg"
     >
-      <h2 className="text-center text-2xl font-bold mb-6 text-blue-600">
+      <h2 suppressHydrationWarning className="text-center text-2xl font-bold mb-6 text-blue-600">
         Book Your Event
       </h2>
 
       <div className="mb-5">
-        <label
+        <label suppressHydrationWarning
           className="block text-sm font-semibold text-gray-700 mb-2"
           htmlFor="event-select"
         >
           Select Event
         </label>
-        <select
+        <select suppressHydrationWarning
           id="event-select"
           value={selectedEventId ?? ""}
           onChange={(e) => setSelectedEventId(Number(e.target.value))}

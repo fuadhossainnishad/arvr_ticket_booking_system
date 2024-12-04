@@ -7,15 +7,16 @@ import Body from "../components/Body";
 import Events from "@/components/Events";
 import AboutUs from "@/components/AboutUs";
 import Contact from "@/components/Contact";
+import CreateEvent from "@/components/CreateEvent";
 export default function Home() {
   return (
     <main suppressHydrationWarning className="">
       <Body />
-      <Events  />
-      <AboutUs/>
-      <Contact/>
-      {/* <Signup />
+      <Events />
+      <AboutUs />
+      <Contact />
       <CreateEvent />
+      {/* <Signup />
       <EditEvent eventId={1} />
       <DeleteEvent eventId={1} />
       <BookingComponent eventId={1} /> */}

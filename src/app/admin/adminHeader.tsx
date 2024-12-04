@@ -8,27 +8,27 @@ interface header {
 
 const headers: Record<string, header> = {
   home: {
-    title: "Home",
-    path: "/",
+    title: "Dashboard",
+    path: "/admin",
   },
   Events: {
     title: "Events",
-    path: "/events",
+    path: "/admin/events",
   },
   CreateEvent: {
     title: "CreateEvent",
-    path: "/createEvent",
+    path: "/admin/createEvent",
   },
   EditEvent: {
     title: "EditEvent",
-    path: "/editEvent",
+    path: "/admin/editEvent",
   },
   DeleteEvent: {
     title: "DeleteEvent",
-    path: "/deleteEvent",
+    path: "/admin/deleteEvent",
   },
 };
-export default function Header() {
+export default function AdminHeader() {
   return (
     <main
       suppressHydrationWarning

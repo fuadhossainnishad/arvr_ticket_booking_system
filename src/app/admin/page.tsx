@@ -1,5 +1,10 @@
-import Events from "@/components/Events";
+import AdminLogin from "@/components/adminLogin";
+import AdminLayout from "./layout";
 
 export default function AdminHome() {
-  return <Events />;
+  return (
+    <AdminLayout showHeader={false}>
+      <AdminLogin />
+    </AdminLayout>
+  );
 }

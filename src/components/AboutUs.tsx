@@ -2,7 +2,7 @@
 
 const AboutUs: React.FC = () => {
   return (
-    <div className="min-h-screen bg-gray-100 text-gray-800">
+    <div suppressHydrationWarning className="min-h-screen bg-gray-100 text-gray-800">
       <div className="container mx-auto px-6 py-12">
         <h1 className="text-4xl font-bold text-center text-blue-600 mb-6">
           About AR/VR Events Ticket Booking System

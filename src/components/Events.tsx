@@ -2,6 +2,7 @@
 import React, { useEffect, useState } from "react";
 import Image from "next/image";
 import { client } from "@/lib/client";
+import {config} from '../config/dotenv.config'
 
 interface Event {
   id: number;
@@ -53,7 +54,7 @@ const Events: React.FC = () => {
               className="border rounded shadow hover:shadow-lg transition p-4"
             >
               <Image
-                src={`http://localhost:5000${event.coverPhoto}`}
+                src={`${config.apiBaseUrl}${event.coverPhoto}`}
                 alt={event.title}
                 className="w-full h-48 rounded mb-4"
                 width={4}

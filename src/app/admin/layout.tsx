@@ -1,12 +1,15 @@
-import AdminHome from "./page";
+import AdminHeader from "./adminHeader";
+
 export default function AdminLayout({
   children,
+  showHeader = true,
 }: {
   children: React.ReactNode;
+  showHeader?: boolean;
 }) {
   return (
-    <section>
-      <AdminHome />
+    <section suppressHydrationWarning>
+      {showHeader && <AdminHeader />}
       {children}
     </section>
   );
