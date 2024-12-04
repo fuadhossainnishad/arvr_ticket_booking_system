@@ -11,26 +11,22 @@ const headers: Record<string, header> = {
     title: "Home",
     path: "/",
   },
-  events: {
+  Events: {
     title: "Events",
     path: "/events",
   },
-  Contact: {
-    title: "Contact",
-    path: "/contact",
+  CreateEvent: {
+    title: "CreateEvent",
+    path: "/createEvent",
   },
-  About: {
-    title: "About",
-    path: "/about",
+  EditEvent: {
+    title: "EditEvent",
+    path: "/editEvent",
   },
-  Enter: {
-    title: "MyEvent",
-    path: "/myevent",
+  DeleteEvent: {
+    title: "DeleteEvent",
+    path: "/deleteEvent",
   },
-  Admin:{
-    title:"Admin",
-    path:"/admin",
-  }
 };
 export default function Header() {
   return (
