@@ -35,7 +35,7 @@ export default function AdminHeader() {
       className="flex flex-row justify-center gap-20 pt-10 text-xl font-semibold font-sans"
     >
       {Object.entries(headers).map(([key, { title, path }]) => (
-        <Link key={key} href={path} passHref>
+        <Link suppressHydrationWarning key={key} href={path} passHref>
           {title}
         </Link>
       ))}

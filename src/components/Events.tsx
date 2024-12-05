@@ -23,6 +23,7 @@ const Events: React.FC = () => {
       const response = await client.get("/api/events"); // Replace with your backend API endpoint
       setEvents(response.data);
       setLoading(false);
+      console.log(response.data);
     } catch (error) {
       console.log("Error fetching events:", error);
       setLoading(false);

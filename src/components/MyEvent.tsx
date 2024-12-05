@@ -17,10 +17,9 @@ const MyEvent: React.FC = () => {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const router = useRouter();
 
-  // Mock function to check authentication (Replace with real auth logic)
   const checkAuth = () => {
-    const token = localStorage.getItem("authToken"); // Or a similar authentication method
-    return !!token; // True if token exists, otherwise false
+    const token = localStorage.getItem("authToken");
+    return !!token;
   };
 
   const fetchBookedEvents = async () => {

@@ -1,68 +1,71 @@
 "use client";
-import { auth } from "@/service/authService";
+
+import { client } from "@/lib/client";
+import { userSignIn } from "@/store/slices/authSlice";
+import { setUserid } from "@/store/slices/idSlice";
 import Link from "next/link";
 import { useState } from "react";
+import { useDispatch } from "react-redux";
 
-
-const signinForm = {
-  email: "",
-  password: "",
-};
+// interface signIn {
+//   onSignIn: () => void;
+// }
 
 export default function UserSignIn() {
-  const [signin, setSignin] = useState(signinForm);
-  const [isAdmin, setIsAdmin] = useState(false); // State to toggle between User and Admin
-
+  const [formData, setFormData] = useState({ email: "", password: "" });
+  const dispatch = useDispatch();
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
-    setSignin({ ...signin, [name]: value });
+    setFormData((prevState) => ({
+      ...prevState,
+      [name]: value,
+    }));
   };
 
   const handleSignin = async (e: React.FormEvent) => {
     e.preventDefault();
+    const adminFormData = new FormData();
+    adminFormData.append("email", formData.email);
+    adminFormData.append("password", formData.password);
     try {
-      const response = await auth(isAdmin ? "/admin-signin" : "/signin", signin);
-      console.log(response.message);
+      const response = await client.post("/api/signin/user", adminFormData, {
+        headers: { "Content-Type": "multipart/form-data" },
+      });
+      if (response.status === 200) {
+        dispatch(userSignIn());
+        dispatch(setUserid(response.data.id))
+      }
+      
+      console.log(response.data);
       alert("Signin successful!");
     } catch (error) {
       alert(error);
     }
   };
-
   return (
-    <main suppressHydrationWarning className="flex flex-col items-center justify-center min-h-screen bg-gray-100">
-      {/* Buttons to switch between user and admin login */}
-      <div className="mb-6">
-        <button
-          onClick={() => setIsAdmin(false)}
-          className={`mr-4 px-6 py-3 text-lg ${!isAdmin ? "bg-blue-500" : "bg-gray-300"} text-white rounded-lg focus:outline-none`}
-        >
-          User Login
-        </button>
-        <button
-          onClick={() => setIsAdmin(true)}
-          className={`px-6 py-3 text-lg ${isAdmin ? "bg-blue-500" : "bg-gray-300"} text-white rounded-lg focus:outline-none`}
-        >
-          Admin Login
-        </button>
-      </div>
-
-      {/* Login form */}
-      <form suppressContentEditableWarning
+    <main
+      suppressHydrationWarning
+      className="flex flex-col items-center justify-center min-h-screen bg-gray-100"
+    >
+      <form
+        suppressContentEditableWarning
         onSubmit={handleSignin}
         className="w-full max-w-lg p-8 bg-white rounded-lg shadow-lg"
       >
         <h1 className="mb-6 text-3xl font-semibold text-center text-gray-700">
-          {isAdmin ? "Admin Login" : "User Login"}
+          User SignIn
         </h1>
         <div className="mb-6">
-          <label htmlFor="email" className="block mb-2 text-sm font-medium text-gray-600">
-            Email Address
+          <label
+            htmlFor="email"
+            className="block mb-2 text-sm font-medium text-gray-600"
+          >
+            User Email Address
           </label>
           <input
             type="email"
             name="email"
-            value={signin.email}
+            value={formData.email}
             placeholder="Enter your email"
             onChange={handleChange}
             required
@@ -70,13 +73,16 @@ export default function UserSignIn() {
           />
         </div>
         <div className="mb-6">
-          <label htmlFor="password" className="block mb-2 text-sm font-medium text-gray-600">
-            Password
+          <label
+            htmlFor="password"
+            className="block mb-2 text-sm font-medium text-gray-600"
+          >
+            User Password
           </label>
           <input
             type="password"
             name="password"
-            value={signin.password}
+            value={formData.password}
             placeholder="Enter your password"
             onChange={handleChange}
             required
@@ -89,11 +95,9 @@ export default function UserSignIn() {
         >
           Sign In
         </button>
-        
-        {/* Sign Up Link */}
         <div className="mt-4 text-center">
           <p className="text-sm text-gray-600">
-            {isAdmin ? "Not an admin?" : "Don't have an account?"}{" "}
+            Don`&apos;`t have an account?
             <Link href="/signup" className="text-blue-500 hover:underline">
               Sign Up
             </Link>
