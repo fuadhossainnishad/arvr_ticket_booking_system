@@ -9,7 +9,7 @@ const signinForm = {
   password: "",
 };
 
-export default function UserLogin() {
+export default function UserSignIn() {
   const [signin, setSignin] = useState(signinForm);
   const [isAdmin, setIsAdmin] = useState(false); // State to toggle between User and Admin
 

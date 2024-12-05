@@ -13,19 +13,19 @@ const headers: Record<string, header> = {
   },
   Events: {
     title: "Events",
-    path: "/admin/events",
+    path: "/admin/Events",
   },
   CreateEvent: {
     title: "CreateEvent",
-    path: "/admin/createEvent",
+    path: "/admin/CreateEvent",
   },
   EditEvent: {
     title: "EditEvent",
-    path: "/admin/editEvent",
+    path: "/admin/EditEvent",
   },
   DeleteEvent: {
     title: "DeleteEvent",
-    path: "/admin/deleteEvent",
+    path: "/admin/DeleteEvent",
   },
 };
 export default function AdminHeader() {

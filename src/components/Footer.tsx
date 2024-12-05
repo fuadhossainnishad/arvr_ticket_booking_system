@@ -5,8 +5,8 @@ import Link from "next/link";
 
 const Footer: React.FC = () => {
   return (
-    <footer className="bg-gray-900 text-white py-8">
-      <div className="container mx-auto px-6">
+    <footer suppressHydrationWarning className="bg-gray-900 text-white py-8">
+      <div suppressHydrationWarning className="container mx-auto px-6">
         {/* Top Section */}
         <div className="flex flex-col md:flex-row justify-between items-center border-b border-gray-700 pb-6">
           {/* Logo or Title */}
