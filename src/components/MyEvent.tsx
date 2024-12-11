@@ -1,7 +1,9 @@
 'use client'
 import React, { useEffect, useState } from "react";
-import { useRouter } from "next/navigation";
+// import { useRouter } from "next/navigation";
 import axios from "axios";
+import {  useSelector } from "react-redux";
+import { RooteState } from "@/store/store";
 
 interface BookedEvent {
   id: number;
@@ -12,43 +14,36 @@ interface BookedEvent {
 }
 
 const MyEvent: React.FC = () => {
+  const userId=useSelector((state:RooteState)=>state.id.userid)
   const [bookedEvents, setBookedEvents] = useState<BookedEvent[]>([]);
   const [loading, setLoading] = useState(true);
-  const [isAuthenticated, setIsAuthenticated] = useState(false);
-  const router = useRouter();
+  // const [isAuthenticated, setIsAuthenticated] = useState(false);
+  // const router = useRouter();
 
-  const checkAuth = () => {
-    const token = localStorage.getItem("authToken");
-    return !!token;
-  };
+  // const checkAuth = () => {
+  //   const token = localStorage.getItem("authToken");
+  //   return !!token;
+  // };
 
-  const fetchBookedEvents = async () => {
+  const fetchBookedEvents = async (userId:number) => {
     try {
-      const response = await axios.get("/api/my-booked-events", {
-        headers: {
-          Authorization: `Bearer ${localStorage.getItem("authToken")}`,
+      const response = await axios.get(`/api/bookings:${userId}`, {
+        headers: {"Content-Type": "application/json"
         },
       });
       setBookedEvents(response.data);
     } catch (error) {
-      console.error("Error fetching booked events:", error);
+      console.log("Error fetching booked events:", error);
     } finally {
       setLoading(false);
     }
   };
 
   useEffect(() => {
-    const isLoggedIn = checkAuth();
-    if (!isLoggedIn) {
-      setIsAuthenticated(false);
-      router.push("/signin"); // Redirect to SignIn if not authenticated
-    } else {
-      setIsAuthenticated(true);
-      fetchBookedEvents();
-    }
-  }, [router]);
+    fetchBookedEvents(userId)
+  }, [userId]);
 
-  if (!isAuthenticated) return null; // Prevent rendering before authentication check
+  // if (!isAuthenticated) return null; // Prevent rendering before authentication check
 
   return (
     <div className="container mx-auto  ">
@@ -57,7 +52,7 @@ const MyEvent: React.FC = () => {
       {loading ? (
         <div className="text-center text-xl">Loading your events...</div>
       ) : bookedEvents.length === 0 ? (
-        <div className="text-center text-xl">You haven`&apos;`t booked any events yet.</div>
+        <div className="text-center text-xl">You haven&apos;t booked any events yet.</div>
       ) : (
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
           {bookedEvents.map((event) => (

@@ -25,17 +25,17 @@ const CreateEvent: React.FC = () => {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    const formDataToSend = new FormData();
-    formDataToSend.append("title", formData.title);
-    formDataToSend.append("description", formData.description);
-    formDataToSend.append("totalSeats", String(formData.totalSeats));
-    formDataToSend.append("ticketPrice", String(formData.ticketPrice));
-    formDataToSend.append("eventDate", formData.eventDate);
-    if (formData.coverPhoto) formDataToSend.append("coverPhoto", formData.coverPhoto);
+    // const formDataToSend = new FormData();
+    // formDataToSend.append("title", formData.title);
+    // formDataToSend.append("description", formData.description);
+    // formDataToSend.append("totalSeats", String(formData.totalSeats));
+    // formDataToSend.append("ticketPrice", String(formData.ticketPrice));
+    // formDataToSend.append("eventDate", formData.eventDate);
+    // if (formData.coverPhoto) formDataToSend.append("coverPhoto", formData.coverPhoto);
 
     try {
-      const response = await client.post("/api/events", formDataToSend, {
-        headers: { "Content-Type": "multipart/form-data" },
+      const response = await client.post("/api/events", formData, {
+        headers: { "Content-Type": "application/json" },
       });
       if(response.status === 200){
         alert("Event created successfully!");

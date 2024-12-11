@@ -2,8 +2,8 @@ import EditEvent from "../../../components/EditEvent";
 
 export default function Page() {
   return (
-    <div>
-      <EditEvent eventId={1} />{" "}
+    <div className="pt-20">
+      <EditEvent eventId={1} />
     </div>
   );
 }

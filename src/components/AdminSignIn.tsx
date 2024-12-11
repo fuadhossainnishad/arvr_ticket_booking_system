@@ -10,7 +10,7 @@ import { useDispatch } from "react-redux";
 
 export default function AdminSignIn() {
   const [formData, setFormData] = useState({ email: "", password: "" });
-const dispatch=useDispatch()
+  const dispatch = useDispatch();
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
     setFormData((prevState) => ({
@@ -21,14 +21,13 @@ const dispatch=useDispatch()
 
   const handleSignin = async (e: React.FormEvent) => {
     e.preventDefault();
-    const adminFormData = new FormData();
-    adminFormData.append("email", formData.email);
-    adminFormData.append("password", formData.password);
     try {
-      const response = await client.post('/api/signin/admin',adminFormData, {
-        headers: { "Content-Type": "multipart/form-data" },
-      })
-      if(response.status === 200){
+      const response = await client.post("/api/admin/signin", formData, {
+        headers: { "Content-Type": "application/json" },
+      });
+      console.log(response);
+      
+      if (response.status === 200) {
         dispatch(adminSignIn());
       }
       console.log(response.data);
@@ -44,15 +43,19 @@ const dispatch=useDispatch()
       className="flex flex-col items-center justify-center min-h-screen bg-gray-100"
     >
       <form
-        suppressContentEditableWarning
+        suppressHydrationWarning
         onSubmit={handleSignin}
         className="w-full max-w-lg p-8 bg-white rounded-lg shadow-lg"
       >
-        <h1 className="mb-6 text-3xl font-semibold text-center text-gray-700">
+        <h1
+          suppressHydrationWarning
+          className="mb-6 text-3xl font-semibold text-center text-gray-700"
+        >
           Admin SignIn
         </h1>
         <div className="mb-6">
           <label
+            suppressHydrationWarning
             htmlFor="email"
             className="block mb-2 text-sm font-medium text-gray-600"
           >
@@ -73,7 +76,7 @@ const dispatch=useDispatch()
             htmlFor="password"
             className="block mb-2 text-sm font-medium text-gray-600"
           >
-           Admin Password
+            Admin Password
           </label>
           <input
             type="password"
@@ -86,6 +89,7 @@ const dispatch=useDispatch()
           />
         </div>
         <button
+          suppressHydrationWarning
           type="submit"
           className="w-full px-6 py-3 text-white bg-blue-500 rounded-lg hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
         >

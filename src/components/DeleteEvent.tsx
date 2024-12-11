@@ -1,5 +1,5 @@
 'use client'
-import axios from "axios";
+import { client } from "@/lib/client";
 
 interface DeleteEventProps {
   eventId: number; 
@@ -11,7 +11,7 @@ const DeleteEvent: React.FC<DeleteEventProps> = ({ eventId }) => {
     if (!confirmation) return;
 
     try {
-      await axios.delete(`/api/events/${eventId}`);
+      await client.delete(`/api/events/:${eventId}`);
       alert("Event deleted successfully!");
     } catch (error) {
       console.error("Error deleting event:", error);

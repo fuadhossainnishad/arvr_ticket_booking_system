@@ -24,18 +24,16 @@ export default function UserSignIn() {
 
   const handleSignin = async (e: React.FormEvent) => {
     e.preventDefault();
-    const adminFormData = new FormData();
-    adminFormData.append("email", formData.email);
-    adminFormData.append("password", formData.password);
     try {
-      const response = await client.post("/api/signin/user", adminFormData, {
-        headers: { "Content-Type": "multipart/form-data" },
+      const response = await client.post("/api/user/signin", formData, {
+        headers: { "Content-Type": "application/json" },
       });
       if (response.status === 200) {
+        dispatch(setUserid(response.data.userId))
         dispatch(userSignIn());
-        dispatch(setUserid(response.data.id))
+        dispatch(setUserid(response.data.id));
       }
-      
+
       console.log(response.data);
       alert("Signin successful!");
     } catch (error) {
@@ -48,7 +46,7 @@ export default function UserSignIn() {
       className="flex flex-col items-center justify-center min-h-screen bg-gray-100"
     >
       <form
-        suppressContentEditableWarning
+        suppressHydrationWarning
         onSubmit={handleSignin}
         className="w-full max-w-lg p-8 bg-white rounded-lg shadow-lg"
       >
@@ -57,6 +55,7 @@ export default function UserSignIn() {
         </h1>
         <div className="mb-6">
           <label
+            suppressHydrationWarning
             htmlFor="email"
             className="block mb-2 text-sm font-medium text-gray-600"
           >

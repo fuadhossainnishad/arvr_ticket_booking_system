@@ -23,7 +23,7 @@ const headers: Record<string, header> = {
     title: "About",
     path: "/about",
   },
-  Enter: {
+  MyEvent: {
     title: "MyEvent",
     path: "/myevent",
   },
@@ -39,7 +39,7 @@ export default function Header() {
       className="flex flex-row justify-center gap-20 pt-10 text-xl font-semibold font-sans"
     >
       {Object.entries(headers).map(([key, { title, path }]) => (
-        <Link key={key} href={path} passHref>
+        <Link suppressHydrationWarning key={key} href={path} passHref>
           {title}
         </Link>
       ))}

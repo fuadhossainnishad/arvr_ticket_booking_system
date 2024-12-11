@@ -1,3 +1,5 @@
+import AdminDashboard from "@/components/AdminDashboard";
+
 export default function AdminHome() {
-  return <div className="">admin DashboardHeader</div>;
+  return <AdminDashboard/>;
 }

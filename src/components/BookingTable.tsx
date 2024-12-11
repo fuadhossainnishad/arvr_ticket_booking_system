@@ -1,20 +1,23 @@
-'use client';
+"use client";
 
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { motion } from "framer-motion";
+import { useSelector } from "react-redux";
+import { RooteState } from "@/store/store";
 
 interface Event {
   id: number;
   title: string;
-  availableSeats: number;
   ticketPrice: number;
+  eventDate: Date;
 }
 
 const BookingTable: React.FC = () => {
   const [events, setEvents] = useState<Event[]>([]);
   const [selectedEventId, setSelectedEventId] = useState<number | null>(null);
   const [seats, setSeats] = useState<number>(1);
+  const userId=useSelector((state:RooteState)=>state.id.userid)
 
   const fetchEvents = async () => {
     try {
@@ -42,15 +45,15 @@ const BookingTable: React.FC = () => {
       return;
     }
 
-    if (seats > selectedEvent.availableSeats) {
-      alert("Not enough available seats.");
-      return;
-    }
+    // if (seats > selectedEvent.availableSeats) {
+    //   alert("Not enough available seats.");
+    //   return;
+    // }
 
     try {
-      await axios.post("/api/bookings", { eventId: selectedEventId, seats });
+      await axios.post("/api/bookings", { userId,eventId: selectedEventId, seats });
       alert("Event booked successfully!");
-      fetchEvents(); // Refresh events to show updated available seats
+      fetchEvents();
     } catch (error) {
       console.error("Error booking event:", error);
       alert("Failed to book event.");
@@ -59,24 +62,29 @@ const BookingTable: React.FC = () => {
 
   return (
     <motion.div
-    suppressHydrationWarning
+      suppressHydrationWarning
       initial={{ opacity: 0, y: 50 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.8 }}
       className="max-w-xl mx-auto mt-20 p-6 bg-white shadow-lg rounded-lg"
     >
-      <h2 suppressHydrationWarning className="text-center text-2xl font-bold mb-6 text-blue-600">
+      <h2
+        suppressHydrationWarning
+        className="text-center text-2xl font-bold mb-6 text-blue-600"
+      >
         Book Your Event
       </h2>
 
       <div className="mb-5">
-        <label suppressHydrationWarning
+        <label
+          suppressHydrationWarning
           className="block text-sm font-semibold text-gray-700 mb-2"
           htmlFor="event-select"
         >
           Select Event
         </label>
-        <select suppressHydrationWarning
+        <select
+          suppressHydrationWarning
           id="event-select"
           value={selectedEventId ?? ""}
           onChange={(e) => setSelectedEventId(Number(e.target.value))}
@@ -87,8 +95,8 @@ const BookingTable: React.FC = () => {
           </option>
           {events.map((event) => (
             <option key={event.id} value={event.id}>
-              {event.title} - {event.availableSeats} seats left - $
-              {event.ticketPrice} per ticket
+              {event.title} - ${event.ticketPrice} per ticket - Date:
+              {event.eventDate.toLocaleDateString()}
             </option>
           ))}
         </select>
@@ -101,7 +109,7 @@ const BookingTable: React.FC = () => {
         <input
           type="number"
           min={1}
-          max={selectedEventId ? events.find((e) => e.id === selectedEventId)?.availableSeats : 1}
+          // max={selectedEventId ? events.find((e) => e.id === selectedEventId)?.availableSeats : 1}
           value={seats}
           onChange={(e) => setSeats(Number(e.target.value))}
           placeholder="Number of Seats"

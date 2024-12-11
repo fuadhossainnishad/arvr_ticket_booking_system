@@ -17,12 +17,12 @@ const EditEvent: React.FC<EditEventProps> = ({ eventId }) => {
     eventDate: "",
     coverPhoto: null as File | null,
   });
-  const [previewPhoto, setPreviewPhoto] = useState<string | null>(null);
+  const [previewPhoto, setPreviewPhoto] = useState<string | null>("");
 
   useEffect(() => {
     const fetchEvent = async () => {
       try {
-        const response = await client.get(`/api/events/${eventId}`);
+        const response = await client.get(`/api/events/:${eventId}`);
         const event = response.data;
         console.log(event);
 
@@ -62,18 +62,18 @@ const EditEvent: React.FC<EditEventProps> = ({ eventId }) => {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    const formDataToSend = new FormData();
-    formDataToSend.append("title", formData.title);
-    formDataToSend.append("description", formData.description);
-    formDataToSend.append("totalSeats", String(formData.totalSeats));
-    formDataToSend.append("ticketPrice", String(formData.ticketPrice));
-    formDataToSend.append("eventDate", formData.eventDate);
-    if (formData.coverPhoto)
-      formDataToSend.append("coverPhoto", formData.coverPhoto);
+    // const formDataToSend = new FormData();
+    // formDataToSend.append("title", formData.title);
+    // formDataToSend.append("description", formData.description);
+    // formDataToSend.append("totalSeats", String(formData.totalSeats));
+    // formDataToSend.append("ticketPrice", String(formData.ticketPrice));
+    // formDataToSend.append("eventDate", formData.eventDate);
+    // if (formData.coverPhoto)
+    //   formDataToSend.append("coverPhoto", formData.coverPhoto);
 
     try {
-      await client.put(`/api/events/${eventId}`, formDataToSend, {
-        headers: { "Content-Type": "multipart/form-data" },
+      await client.put(`/api/events/:${eventId}`, formData, {
+        headers: { "Content-Type": "application/json" },
       });
       alert("Event updated successfully!");
     } catch (error) {

@@ -7,7 +7,7 @@ import Body from "../components/Body";
 import Events from "@/components/Events";
 import AboutUs from "@/components/AboutUs";
 import Contact from "@/components/Contact";
-import CreateEvent from "@/components/CreateEvent";
+// import CreateEvent from "@/components/CreateEvent";
 export default function Home() {
   return (
     <main suppressHydrationWarning className="">
@@ -15,7 +15,7 @@ export default function Home() {
       <Events />
       <AboutUs />
       <Contact />
-      <CreateEvent />
+      {/* <CreateEvent /> */}
       {/* <Signup />
       <EditEvent eventId={1} />
       <DeleteEvent eventId={1} />
