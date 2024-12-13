@@ -27,10 +27,10 @@ const headers: Record<string, header> = {
     title: "MyEvent",
     path: "/myevent",
   },
-  Admin:{
-    title:"Admin",
-    path:"/admin",
-  }
+  Admin: {
+    title: "Admin",
+    path: "/admin",
+  },
 };
 export default function Header() {
   return (

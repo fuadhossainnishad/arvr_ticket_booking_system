@@ -23,9 +23,9 @@ const headers: Record<string, header> = {
     title: "EditEvent",
     path: "/admin/EditEvent",
   },
-  DeleteEvent: {
-    title: "DeleteEvent",
-    path: "/admin/DeleteEvent",
+  Messages: {
+    title: "Messages",
+    path: "/admin/Messages",
   },
 };
 export default function AdminHeader() {

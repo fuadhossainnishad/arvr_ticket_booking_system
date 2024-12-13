@@ -41,7 +41,10 @@ export default function Signup() {
   };
 
   return (
-    <main suppressHydrationWarning className="flex items-center justify-center min-h-screen bg-gray-100 py-12 px-6 sm:px-12">
+    <main
+      suppressHydrationWarning
+      className="flex items-center justify-center min-h-screen bg-gray-100 py-12 px-6 sm:px-12"
+    >
       <div className="w-full max-w-md bg-white p-8 rounded-lg shadow-lg">
         <h2 className="text-3xl font-semibold text-center text-gray-700 mb-8">
           Create Your Account
@@ -59,7 +62,7 @@ export default function Signup() {
               type="text"
               name="fullname"
               value={signup.fullname}
-              placeholder={ signup.fullname}
+              placeholder={signup.fullname}
               onChange={handleChange}
               required
               className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
@@ -77,7 +80,7 @@ export default function Signup() {
               type="email"
               name="email"
               value={signup.email}
-              placeholder={ signup.email}
+              placeholder={signup.email}
               onChange={handleChange}
               required
               className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
@@ -95,7 +98,7 @@ export default function Signup() {
               type="text"
               name="mobilenumber"
               value={signup.mobilenumber}
-              placeholder={ signup.mobilenumber}
+              placeholder={signup.mobilenumber}
               onChange={handleChange}
               required
               className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
@@ -113,7 +116,7 @@ export default function Signup() {
               type="password"
               name="password"
               value={signup.password}
-              placeholder={ signup.password}
+              placeholder={signup.password}
               onChange={handleChange}
               required
               className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"

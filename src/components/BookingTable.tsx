@@ -1,28 +1,42 @@
 "use client";
 
 import React, { useState, useEffect } from "react";
-import axios from "axios";
 import { motion } from "framer-motion";
 import { useSelector } from "react-redux";
 import { RooteState } from "@/store/store";
+import { client } from "@/lib/client";
+import { useRouter } from "next/navigation";
+import { createSelector } from "@reduxjs/toolkit";
 
 interface Event {
   id: number;
   title: string;
-  ticketPrice: number;
-  eventDate: Date;
+  ticket_price: number;
+  event_date: Date;
 }
 
 const BookingTable: React.FC = () => {
+  const selectUserId = createSelector(
+    (state: RooteState) => state.id,
+    (id) => id.userid
+  );
+  const selectUserAuth = createSelector(
+    (state: RooteState) => state.auth,
+    (auth) => auth.userSignIn
+  );
+  const isUserSignIn = useSelector(selectUserAuth);
+  const userId = useSelector(selectUserId);
   const [events, setEvents] = useState<Event[]>([]);
   const [selectedEventId, setSelectedEventId] = useState<number | null>(null);
   const [seats, setSeats] = useState<number>(1);
-  const userId=useSelector((state:RooteState)=>state.id.userid)
+  console.log(userId);
+  const router = useRouter();
 
   const fetchEvents = async () => {
     try {
-      const response = await axios.get("/api/events"); // Adjust endpoint as needed
+      const response = await client.get("/api/events");
       setEvents(response.data);
+      console.log(response);
     } catch (error) {
       console.log("Error fetching events:", error);
     }
@@ -51,12 +65,27 @@ const BookingTable: React.FC = () => {
     // }
 
     try {
-      await axios.post("/api/bookings", { userId,eventId: selectedEventId, seats });
-      alert("Event booked successfully!");
-      fetchEvents();
-    } catch (error) {
-      console.error("Error booking event:", error);
-      alert("Failed to book event.");
+      if (!isUserSignIn) {
+        router.push("/signin");
+        alert("Please sign in to book an event.");
+      } else {
+        const response = await client.post("/api/bookings", {
+          userId,
+          eventId: selectedEventId,
+          seats,
+        });
+        console.log(response.data);
+        alert("Event booked successfully!");
+        fetchEvents();
+      }
+    } catch (error: unknown) {
+      if (error instanceof Error) {
+        console.error("Error fetching events:", error.message);
+        alert("Failed to load events. Please try again later.");
+      } else {
+        console.error("Unexpected error:", error);
+        alert("An unexpected error occurred. Please try again later.");
+      }
     }
   };
 
@@ -95,8 +124,8 @@ const BookingTable: React.FC = () => {
           </option>
           {events.map((event) => (
             <option key={event.id} value={event.id}>
-              {event.title} - ${event.ticketPrice} per ticket - Date:
-              {event.eventDate.toLocaleDateString()}
+              {event.title} - ${event.ticket_price} per ticket - Date:
+              {new Date(event.event_date).toLocaleDateString()}
             </option>
           ))}
         </select>

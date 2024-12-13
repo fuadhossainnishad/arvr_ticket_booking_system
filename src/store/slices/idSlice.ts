@@ -7,9 +7,9 @@ export interface IdInterface {
 }
 
 const initialId: IdInterface = {
-  userid: 0,
-  adminid: 0,
-  editeventid: 0,
+  userid: NaN,
+  adminid: NaN,
+  editeventid: NaN,
 };
 
 export const idSlice = createSlice({

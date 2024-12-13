@@ -3,39 +3,43 @@ import React, { useState, useEffect } from "react";
 import { client } from "@/lib/client";
 import Image from "next/image";
 import { formateDate } from "@/lib/formateDate";
+import { useSearchParams } from "next/navigation";
 
-interface EditEventProps {
-  eventId: number;
-}
+// interface EditEventProps {
+//   eventId: number;
+// }
 
-const EditEvent: React.FC<EditEventProps> = ({ eventId }) => {
+const EditEvent: React.FC = () => {
+  const searchparams = useSearchParams();
+  const eventId = Number(searchparams.get("eventid"));
+
   const [formData, setFormData] = useState({
     title: "",
     description: "",
-    totalSeats: 0,
-    ticketPrice: 0,
-    eventDate: "",
-    coverPhoto: null as File | null,
+    total_seats: 0,
+    ticket_price: 0,
+    event_date: "",
+    cover_photo: null as File | null,
   });
   const [previewPhoto, setPreviewPhoto] = useState<string | null>("");
 
   useEffect(() => {
     const fetchEvent = async () => {
       try {
-        const response = await client.get(`/api/events/:${eventId}`);
+        const response = await client.get(`/api/events/${eventId}`);
         const event = response.data;
         console.log(event);
 
         setFormData({
           title: event.title,
           description: event.description,
-          totalSeats: event.totalSeats,
-          ticketPrice: event.ticketPrice,
-          eventDate: formateDate(event.eventDate),
-          coverPhoto: null,
+          total_seats: event.total_seats,
+          ticket_price: event.ticket_price,
+          event_date: formateDate(event.event_date),
+          cover_photo: null,
         });
-        console.log(event.eventDate)
-        setPreviewPhoto(event.coverPhoto);
+        console.log(event.eventDate);
+        setPreviewPhoto(event.cover_photo);
       } catch (error) {
         console.log("Error fetching event:", error);
         alert("Failed to load event data.");
@@ -43,7 +47,7 @@ const EditEvent: React.FC<EditEventProps> = ({ eventId }) => {
     };
 
     fetchEvent();
-  }, [eventId]);
+  },[eventId]);
 
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
@@ -55,7 +59,7 @@ const EditEvent: React.FC<EditEventProps> = ({ eventId }) => {
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files) {
       const file = e.target.files[0];
-      setFormData({ ...formData, coverPhoto: file });
+      setFormData({ ...formData, cover_photo: file });
       setPreviewPhoto(URL.createObjectURL(file));
     }
   };
@@ -72,12 +76,13 @@ const EditEvent: React.FC<EditEventProps> = ({ eventId }) => {
     //   formDataToSend.append("coverPhoto", formData.coverPhoto);
 
     try {
-      await client.put(`/api/events/:${eventId}`, formData, {
+      const response=await client.put(`/api/events/${eventId}`, formData, {
         headers: { "Content-Type": "application/json" },
       });
+      console.log("upadte events:", response.data)
       alert("Event updated successfully!");
     } catch (error) {
-      console.error(error);
+      console.log("Error in uodating event:",error);
       alert("Error updating event.");
     }
   };
@@ -116,10 +121,10 @@ const EditEvent: React.FC<EditEventProps> = ({ eventId }) => {
         <label className="block text-sm font-medium mb-2">Total Seats</label>
         <input
           type="number"
-          name="totalSeats"
-          value={formData.totalSeats || undefined}
+          name="total_seats"
+          value={formData.total_seats}
           onChange={handleChange}
-          placeholder={`${formData.totalSeats || undefined}`}
+          placeholder={`${formData.total_seats}`}
           className="w-full border p-2 rounded"
           required
         />
@@ -128,10 +133,10 @@ const EditEvent: React.FC<EditEventProps> = ({ eventId }) => {
         <label className="block text-sm font-medium mb-2">Ticket Price</label>
         <input
           type="number"
-          name="ticketPrice"
-          value={formData.ticketPrice || undefined}
+          name="ticket_price"
+          value={formData.ticket_price}
           onChange={handleChange}
-          placeholder={`${formData.ticketPrice || undefined}`}
+          placeholder={`${formData.ticket_price}`}
           className="w-full border p-2 rounded"
           required
         />
@@ -140,10 +145,10 @@ const EditEvent: React.FC<EditEventProps> = ({ eventId }) => {
         <label className="block text-sm font-medium mb-2">Event Date</label>
         <input
           type="date"
-          name="eventDate"
-          value={formData.eventDate}
+          name="event_date"
+          value={formData.event_date}
           onChange={handleChange}
-          placeholder={formData.eventDate}
+          placeholder={formData.event_date}
           className="w-full border p-2 rounded"
           required
         />
@@ -152,9 +157,9 @@ const EditEvent: React.FC<EditEventProps> = ({ eventId }) => {
         <label className="block text-sm font-medium mb-2">Cover Photo</label>
         <input
           type="file"
-          name="coverPhoto"
+          name="cover_photo"
           onChange={handleFileChange}
-          placeholder={`${formData.coverPhoto}`}
+          placeholder={`${formData.cover_photo}`}
           className="w-full border p-2 rounded"
           accept="image/*"
         />

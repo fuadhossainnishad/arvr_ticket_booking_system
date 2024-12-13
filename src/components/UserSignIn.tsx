@@ -29,13 +29,11 @@ export default function UserSignIn() {
         headers: { "Content-Type": "application/json" },
       });
       if (response.status === 200) {
-        dispatch(setUserid(response.data.userId))
+        dispatch(setUserid(response.data.userId));
         dispatch(userSignIn());
-        dispatch(setUserid(response.data.id));
+        console.log(response.data);
+        alert("Signin successful!");
       }
-
-      console.log(response.data);
-      alert("Signin successful!");
     } catch (error) {
       alert(error);
     }

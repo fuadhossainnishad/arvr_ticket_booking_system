@@ -3,8 +3,8 @@ import React, { useEffect, useState } from "react";
 import Image from "next/image";
 import { client } from "@/lib/client";
 import { config } from "../config/dotenv.config";
-import { usePathname,useRouter } from "next/navigation";
-import { useDispatch } from "react-redux";
+import { usePathname, useRouter } from "next/navigation";
+// import { useDispatch } from "react-redux";
 // import { useRouter } from "next/router";
 
 interface Event {
@@ -12,22 +12,22 @@ interface Event {
   title: string;
   description: string;
   totalSeats: number;
-  ticketPrice: number;
-  eventDate: string;
+  ticket_price: number;
+  event_date: string;
   coverPhoto: string;
 }
 
 const Events: React.FC = () => {
   const [events, setEvents] = useState<Event[]>([]);
   const [loading, setLoading] = useState(true);
-  const dispatch=useDispatch()
+  // const dispatch=useDispatch()
   // const [isClient, setIsClient] = useState(false);
   // const router = useRouter();
   // const routerPath = router.pathname.startsWith("/events/admin");
 
   const pathname = usePathname();
   const adminPath = pathname?.startsWith("/admin/Events");
-  const router=useRouter()
+  const router = useRouter();
 
   const fetchEvents = async () => {
     try {
@@ -41,10 +41,9 @@ const Events: React.FC = () => {
     }
   };
 
-  const editEventHandler=()=>{
-router.push('/admin/events')
-
-  }
+  const editEventHandler = (eventid: number) => {
+    router.push(`/admin/EditEvent?eventid=${eventid}`);
+  };
 
   // const bookEvent = async (id: number) => {};
 
@@ -83,11 +82,11 @@ router.push('/admin/events')
               />
               <h2 className="text-xl font-bold mb-2">{event.title}</h2>
               <p className="text-sm mb-2 text-gray-600">
-                Event Date:{new Date(event.eventDate).toLocaleDateString()}
+                Event Date:{new Date(event.event_date).toLocaleDateString()}
               </p>
               <p className="text-sm mb-4">Event Details:{event.description}</p>
               <p className="text-sm font-semibold mb-4">
-                Price Rate:${event.ticketPrice} per ticket
+                Price Rate:${event.ticket_price} per ticket
               </p>
               {/* <p className="text-sm mb-4">
                 <strong>{event.availableSeats}</strong> seats available
@@ -95,7 +94,7 @@ router.push('/admin/events')
               {adminPath ? (
                 <div className="flex space-x-2">
                   <button
-                    onClick={() => editEventHandler}
+                    onClick={() => editEventHandler(event.id)}
                     className="bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600"
                   >
                     Edit
