@@ -19,8 +19,8 @@ export default function Page() {
     const fetchMessages = async () => {
       try {
         const response = await client.get("/api/contacts/");
-        console.log(response.data)
-        setMessages(response.data);
+        console.log(response.data.allContacts)
+        setMessages(response.data.allContacts);
       } catch (error:unknown) {
         setError("Failed to fetch messages. Please try again.");
         console.error("Error fetching messages:", error);
@@ -43,6 +43,7 @@ export default function Page() {
   return (
     <div className="p-6">
       <h1 className="text-2xl font-bold mb-4">Admin Messages</h1>
+      {messages.length > 0 && <p>Total messages: {messages.length}</p>}
       {messages.length > 0 ? (
         <table className="table-auto w-full border-collapse border border-gray-300">
           <thead>
