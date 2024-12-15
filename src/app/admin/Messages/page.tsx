@@ -19,6 +19,7 @@ export default function Page() {
     const fetchMessages = async () => {
       try {
         const response = await client.get("/api/contacts/");
+        console.log(response.data)
         setMessages(response.data);
       } catch (error:unknown) {
         setError("Failed to fetch messages. Please try again.");
